@@ -1,0 +1,15 @@
+# Direct runtime dependencies for minicpmo45-tts-dflash.
+# Mirrors [project.dependencies] in pyproject.toml; transitive deps are resolved by uv (see uv.lock).
+# Requires Python >=3.10,<3.11. Install with: pip install -r requirements.txt
+accelerate>=1.10.0
+av>=14.0.0
+librosa==0.9.0
+minicpmo-utils[all]>=1.0.5
+numpy>=1.26.0
+pillow>=10.0.0
+safetensors>=0.5.0
+setuptools<81
+soundfile==0.12.1
+torch>=2.3.0,<=2.8.0
+torchaudio<=2.8.0
+transformers==4.51.0

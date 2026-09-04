@@ -1,0 +1,32 @@
+[project]
+name = "minicpmo45-tts-dflash"
+version = "0.1.0"
+description = "Transformers inference for MiniCPM-o 4.5 with a DFlash TTS drafter"
+readme = "README.md"
+requires-python = ">=3.10,<3.11"
+dependencies = [
+    "accelerate>=1.10.0",
+    "av>=14.0.0",
+    "librosa==0.9.0",
+    "minicpmo-utils[all]>=1.0.5",
+    "numpy>=1.26.0",
+    "pillow>=10.0.0",
+    "safetensors>=0.5.0",
+    "setuptools<81",
+    "soundfile==0.12.1",
+    "torch>=2.3.0,<=2.8.0",
+    "torchaudio<=2.8.0",
+    "transformers==4.51.0",
+]
+
+[project.scripts]
+minicpmo-dflash-simplex = "minicpmo_dflash.simplex:main"
+minicpmo-dflash-duplex = "minicpmo_dflash.duplex:main"
+minicpmo-dflash-benchmark = "minicpmo_dflash.benchmark:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/minicpmo_dflash"]
