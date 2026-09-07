@@ -1,6 +1,6 @@
 # MiniCPM-o 4.5 TTS DFlash
 
-This project attaches a DFlash drafter trained with `speculators` to the
+This project attaches a DFlash drafter (<https://huggingface.co/cs-qyzhang/MiniCPM-o-4_5-tts-dflash>) trained with `speculators` to the
 Talker/TTS decoder of MiniCPM-o 4.5, and exposes three command-line entries:
 
 - Simplex: text, image or video input is turned into speech through the official
