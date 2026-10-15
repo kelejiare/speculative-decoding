@@ -28,7 +28,3 @@ uv run minicpmo-dflash-benchmark --output outputs/benchmark.json
 常用参数：`--ref-audio` 指定参考音色，`--device cuda:0` 选择 GPU，`--vocoder-device cuda:1` 将声码器放到另一张显卡，`--disable-dflash` 切换为原生 TTS 解码。各命令的完整参数可通过 `--help` 查看。
 
 DFlash 仅加速 TTS 解码；主模型的文本生成与视觉、音频编码保持原有流程。生成文件默认保存在 `outputs/`，训练说明见 [training.md](training.md)。
-
-## 来源
-
-基于 [cs-qyzhang/minicpm-o-4.5-tts-dflash](https://github.com/cs-qyzhang/minicpm-o-4.5-tts-dflash)，保留原项目 Git 历史。
