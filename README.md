@@ -1,6 +1,19 @@
-# Speculative Decoding：DFlash 语音推理实验
+# MiniCPM-o 4.5 语音推理优化：DFlash 扩展实验
 
-本仓库用于个人运行 DFlash 的 MiniCPM-o 4.5 TTS 推理实验，支持文本/图片/视频转语音、双工音视频交互及接受率评测。方法参考 [DFlash 官方论文](https://arxiv.org/abs/2602.06036)：用轻量级块扩散模型并行生成草稿，再由目标模型验证。
+本仓库是个人项目「MiniCPM-o 4.5 语音推理优化与投机解码探索」中 DFlash 扩展实验的公开代码，基于开源实现开展 TTS 推理复现与分析，提供文本/图片/视频转语音、录制视频双工推理及接受率评测入口。
+
+## 项目背景与公开范围
+
+整体项目围绕 MiniCPM-o 4.5 的 Thinker、Talker 与 Code2Wav 链路开展语音推理优化，包含两个方向：
+
+| 方向 | 环境与工作内容 | 公开范围 |
+| --- | --- | --- |
+| 昇腾推理优化 | OpenBMB × 华为挑战赛；基于 vLLM-Omni 与 Ascend 910C 开展部署、流式链路分析、Code2Wav 优化与 Talker 请求批处理 | 作为项目背景，相关实现与评测材料未包含在本仓库 |
+| DFlash 扩展实验 | 个人探索；基于 PyTorch/Transformers 与 CUDA，在 TTS 阶段运行草稿模型与 Talker 协同解码 | 本仓库提供该部分推理代码、评测入口与使用文档 |
+
+昇腾侧吞吐、TTFP、E2E 和 RTF 优化结果对应其独立实验设置，不能作为本仓库的 DFlash 性能结论。目前仓库未提交 DFlash 与原生解码的完整对照结果；评测脚本可用于生成接受率等实验记录。
+
+DFlash 方法参考[官方论文](https://arxiv.org/abs/2602.06036)：用轻量级块扩散模型并行生成草稿，再由目标模型验证。
 
 ## MiniCPM-o 与 DFlash 的分工
 
@@ -30,14 +43,14 @@ uv sync
 # 文本转语音
 uv run minicpmo-dflash-simplex --draft-model /path/to/tts-draft --text "你好，欢迎使用语音合成。" --output outputs/demo.wav
 
-# 双工音视频交互：请自行提供输入视频
+# 录制视频双工推理：请自行提供输入视频
 uv run minicpmo-dflash-duplex --draft-model /path/to/tts-draft --video /path/to/input.mp4
 
 # DFlash 接受率评测
 uv run minicpmo-dflash-benchmark --draft-model /path/to/tts-draft --output outputs/benchmark.json
 ```
 
-常用参数：`--ref-audio` 指定参考音色，`--device cuda:0` 选择 GPU，`--vocoder-device cuda:1` 将声码器放到另一张显卡，`--disable-dflash` 切换为原生 TTS 解码。各命令的完整参数可通过 `--help` 查看。
+常用参数：`--ref-audio` 指定参考音色，`--device cuda:0` 选择 GPU，`--vocoder-device cuda:1` 将声码器放到另一张显卡。Simplex/Duplex 可通过 `--disable-dflash` 切换为原生 TTS 解码；接受率评测命令不支持此选项。各命令的完整参数可通过 `--help` 查看。
 
 生成文件默认保存在 `outputs/`。评测应区分 TTS 解码时间与完整推理耗时；接受率也不等同于端到端加速比。
 
